@@ -1,34 +1,27 @@
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
+var services = builder.Services;
+services.AddHttpClient("GatewayClient", client => client.BaseAddress = new Uri("https://host.docker.internal:7242/"))
+    .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+    {
+        ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+    });
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-
 app.UseHttpsRedirection();
 
-var summaries = new[]
+app.MapGet("/initiate", async (HttpContext context) =>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
+    var serviceProvider = app.Services;
+    var factory = serviceProvider.GetRequiredService<IHttpClientFactory>();
+    var client = factory.CreateClient("GatewayClient");
+    var content = "Hello to the Gateway!";
+    var stringContent = JsonContent.Create(content);
+    var responseToPost = await client.PostAsync("test/doAction", stringContent);
+    var responseToGet = await client.GetAsync("test/getInfo");
+    var getResponseMessage = $"Response to GetInfo: [{responseToGet}].";
+    var postResponseMessage = $"Response to Do Action: [{responseToPost}].";
+    Console.WriteLine(getResponseMessage);
+    Console.WriteLine(postResponseMessage);
+    return $"{getResponseMessage} {postResponseMessage}";
 });
 
 app.Run();
-
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

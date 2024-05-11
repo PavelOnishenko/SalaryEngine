@@ -1,0 +1,18 @@
+1. Add all projects (microservices) creating and configuring all connections after adding each one. 
+List of the microservices is in Architecture description.
+Test each connection after adding. Content of connections doesn't matter on this stage, let it be "test".
+
+2. Create an easily runnable testing script that would check if all microservices communicate well.
+
+3. Formalise all interfaces of connections. Write down use scenarios, 
+and see on paper that the planned connection interfaces are working.
+
+4. Implement connections using respective technologies, test that they all work.
+
+5. Modify the connection testing script to see all interfaces match each other.
+
+6. Create test projects and implement logic in services using TDD.
+
+7. Implement auth/auth.
+
+8. Cover connections etc with integration tests.
