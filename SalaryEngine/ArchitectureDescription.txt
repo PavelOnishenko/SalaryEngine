@@ -1,0 +1,183 @@
+﻿Microservices Overview
+1.	API Gateway
+•	Type of Project: ASP.NET Core Web API
+•	Techs: .NET Core, HTTP/gRPC
+•	Communications:
+•	Frontend Service(HTTP)
+•	Authentication Service(HTTP/gRPC)
+•	Salary Calculation Service (HTTP/gRPC, RabbitMQ)
+•	Payment Order Service (HTTP/gRPC, Kafka)
+•	Bank Communication Service (gRPC)
+•	Logging & Monitoring Service (HTTP)
+•	Purpose: Route and aggregate requests from the frontend to various backend services, handle authentication.
+2.	Frontend Service
+•	Type of Project: React SPA(Single Page Application)
+•	Techs: React, HTTP
+•	Communications:
+•	API Gateway(HTTP)
+•	Purpose: Provide UI for users to interact with the salary and payment systems.
+3.Authentication Service
+•	Type of Project: ASP.NET Core Web API
+•	Techs: .NET Core, MongoDB, HTTP
+•	Communications:
+•	API Gateway(HTTP / gRPC)
+•	Purpose: Manage user authentication and authorization.
+4.Salary Calculation Service
+•	Type of Project: ASP.NET Core Web API
+•	Techs: .NET Core, PostgreSQL, NHibernate, RabbitMQ
+•	Communications:
+•	API Gateway(HTTP / gRPC)
+•	Payment Order Service(RabbitMQ)
+•	Purpose: Calculate employee salaries and manage related data.
+5.Payment Order Service
+•	Type of Project: ASP.NET Core Web API
+•	Techs: .NET Core, PostgreSQL, Kafka
+•	Communications:
+•	Salary Calculation Service(RabbitMQ)
+•	Bank Communication Service(Kafka)
+•	Purpose: Generate and manage payment orders.
+6.Bank Communication Service
+•	Type of Project: ASP.NET Core Web API
+•	Techs: .NET Core, gRPC
+•	Communications:
+•	Payment Order Service(Kafka)
+•	Purpose: Interface with bank APIs to execute payments.
+7.Logging & Monitoring Service
+•	Type of Project: ASP.NET Core Web API
+•	Techs: .NET Core, Elasticsearch, Logstash, Kibana(ELK Stack)
+•	Communications:
+•	All Services(HTTP)
+•	Purpose: Log and monitor system activity and health.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+System Architecture Overview
+Microservices Breakdown
+1.Frontend Service:
+•	Technology: React
+•	Description: Provides the user interface for interacting with the system, allowing users to view and manage employee salaries.
+2.Salary Calculation Service:
+•	Technology: .NET, RabbitMQ for messaging
+•	Description: Handles complex calculations of salaries based on employee data, tax rates, benefits, and other deductions.
+3.Payment Order Service:
+•	Technology: .NET, Kafka for event streaming
+•	Description: Generates bank payment orders and prepares them for transmission to the banking service.
+4.Bank Communication Service:
+•	Technology: .NET, gRPC for communication
+•	Description: Communicates directly with the bank’s API to execute salary payments.
+5.Authentication Service:
+•	Technology: .NET, MongoDB for storage
+•	Description: Manages user authentication and authorization.
+6.Logging and Monitoring Service:
+•	Technology: .NET, Elasticsearch, Logstash, and Kibana(ELK stack)
+•	Description: Captures logs and metrics from other services, providing insights and real - time monitoring of the system's health.
+Database and Storage
+•	NHibernate with PostgreSQL: Used by the Salary Calculation and Payment Order services for relational data storage.
+•	MongoDB: Utilized by the Authentication Service for storing user data.
+•	Redis: Employed for caching frequently accessed data such as salary computations and user session data.
+Communication Protocols
+•	HTTP: Basic communication between the frontend and backend services.
+•	gRPC: Used by services that require fast, binary communication, like the Bank Communication Service.
+•	RabbitMQ: Handles asynchronous message queuing for tasks that require reliable delivery but are not time - sensitive, such as initiating salary calculations.
+•	Kafka: Streams large volumes of events, such as payment orders, allowing for real - time processing and resilience.
+Deployment and Orchestration
+•	Docker: Each service is containerized using Docker, ensuring consistency across environments.
+•	Kubernetes: Manages the containers, handling deployment, scaling, and management of the service containers.
+Key Features and Additional Complexity
+•	Batch and Real-Time Payments: Support both immediate and batch processing of payments to simulate high-load scenarios.
+•	Salary Adjustments: Allow manual adjustments and bonuses to be applied to employee salaries before final calculation.
+•	Audit Trail: Maintain an immutable log of all salary calculations and transactions for compliance and debugging.
+Use Cases and Background Jobs
+1.	Regular Salary Payments: Calculate and process monthly employee salaries.
+2.	Bonus Payments: Handle occasional bonus payments, involving different calculation rules.
+3.	Error Handling and Reconciliation: Automatically handle payment failures and discrepancies through a reconciliation process.
+4.	Compliance Reports: Generate reports for auditing and compliance purposes.
+Messaging and Multi-threading Scenarios
+•	RabbitMQ: Used for decoupled messages in salary computation requests.
+•	Kafka: Manages streams of payment orders for real-time and batch processing.
+•	Multi-threading: Essential in the Salary Calculation and Payment Order services to handle high volumes of data processing and API calls efficiently.
+1. Communication Protocols Assignment to Services
+You're absolutely right in pointing out that the communication technologies are not inherently tied to individual services but rather define how services interact with each other. Let's clarify how these communication methods are utilized across the microservices architecture:
+HTTP
+•	Used by: Frontend Service and other backend services.
+•	Rationale: HTTP is the most common protocol for web-based interactions, especially from user interfaces like a React app to backend services. It's used for synchronous operations where immediate response is needed, such as fetching salary data or updating user settings.
+RabbitMQ
+•	Used by: Salary Calculation Service, Payment Order Service.
+•	Rationale: RabbitMQ is effective for reliable message queuing.It decouples services that don't require immediate responses, such as queuing up salary computations or payment orders, allowing these tasks to be handled asynchronously. This ensures that the system remains responsive even when these heavier tasks are queued up.
+Kafka
+•	Used by: Payment Order Service to emit payment order events, Bank Communication Service to subscribe to these events.
+•	Rationale: Kafka is well - suited for event streaming and is used where high throughput and fault tolerance are necessary.It's ideal for processing streams of payment orders where each event can be independently consumed and acted upon, such as initiating bank payments.
+gRPC
+•	Used by: Bank Communication Service.
+•	Rationale: gRPC is used for direct, fast, and efficient communication between services, particularly where performance and low latency are critical.The Bank Communication Service uses gRPC to securely and quickly communicate with external bank systems which likely support gRPC for their APIs.
+2.High Load Scenarios in the Real World
+The potential for high load in this system arises from various real-world business scenarios, including:
+Scalability in Payment Processing
+•	Batch Processing: During payroll periods, especially at month - end, there can be a high volume of transactions processed in batches.Systems need to handle this surge efficiently.
+•	Real - Time Payments: As businesses grow or during specific events(like bonuses or corrections), the system may need to handle a significant number of concurrent transactions.
+Data Handling and Reporting
+•	Complex Calculations: Salary calculations with various parameters(like tax rates, benefits, deductions) can become computationally intensive as the number of employees grows.
+•	Compliance and Reporting: Generating compliance reports or audit logs can involve heavy data aggregation and processing, which increases load during certain periods.
+System Resilience and Availability
+•	Continuous Operation: Ensuring that the system can handle requests without downtime during peak usage times requires robust infrastructure and efficient handling of concurrent processes.
+System Design Considerations for High Load
+•	Load Balancing: Use Kubernetes to distribute traffic evenly among service instances, ensuring no single node becomes a bottleneck.
+•	Caching: Implement caching strategies using Redis to store frequently accessed data, reducing the load on the databases.
+•	Database Optimization: Utilize MongoDB and PostgreSQL effectively, indexing necessary fields and optimizing queries to handle high volumes of reads and writes.
+•	Asynchronous Processing: Leverage RabbitMQ and Kafka to manage background tasks like salary calculations and payment processing without impacting user experience.
+
+
+
+
+
+
+
+For a detailed breakdown of each communication interaction within the microservices architecture, here is an in-depth mapping of which services communicate with each other, the technology used for each interaction, and the purpose behind these communications:
+Communication Diagram
+1.	Frontend Service to Backend Services
+•	Communication Technology: HTTP
+•	Services Involved: Frontend Service communicates with the Salary Calculation Service, Payment Order Service, and Authentication Service.
+•	Purpose:
+•	Frontend to Salary Calculation Service: Fetch calculated salaries and submit new calculation requests.
+•	Frontend to Payment Order Service: Request status of payment orders and initiate new orders.
+•	Frontend to Authentication Service: Handle user logins, logouts, and session validations.
+2.	Salary Calculation Service to Payment Order Service
+•	Communication Technology: RabbitMQ
+•	Services Involved: Salary Calculation Service sends completed salary computation results to the Payment Order Service.
+•	Purpose: To queue salary calculations that need to be transformed into payment orders. This decouples the calculation from payment processing, enhancing performance and reliability.
+3.	Payment Order Service to Bank Communication Service
+•	Communication Technology: Kafka
+•	Services Involved: Payment Order Service publishes payment orders; Bank Communication Service subscribes to these events.
+•	Purpose: To stream payment orders to the Bank Communication Service, which will process these orders in real-time or in batches, facilitating a smooth flow of data and enabling scalable, reliable payment execution.
+4.	Bank Communication Service Interaction
+•	Communication Technology: gRPC
+•	Services Involved: Bank Communication Service interacts directly with the bank’s systems.
+•	Purpose: To execute payment transactions efficiently and securely with the bank’s API, utilizing gRPC for its performance benefits in scenarios requiring rapid, reliable communications.
+5.	Service to Logging and Monitoring Service
+•	Communication Technology: HTTP(and internal logging protocols like Syslog or Fluentd)
+•	Services Involved: All services send logs and monitoring data to the Logging and Monitoring Service.
+•	Purpose: To centralize logging and enable real-time monitoring and analysis of the health and performance of all services within the ecosystem.
+Additional Details
+•	Asynchronous vs. Synchronous: Where responsiveness and immediate feedback are crucial (e.g., front-end interactions), HTTP is used for synchronous communication. For operations that can tolerate some delay (like processing salary calculations or payment orders), asynchronous messaging (RabbitMQ, Kafka) is used to improve system efficiency and responsiveness.
+•	Security and Authentication: All communications, especially those involving sensitive financial data or personal information, should be secured using TLS/ SSL to encrypt the data in transit. Additionally, the Authentication Service manages API tokens or session cookies, which are verified during each HTTP request to the backend services.
+•	Error Handling and Reliability: Each service should implement robust error handling and retry mechanisms, particularly for asynchronous communications that use RabbitMQ and Kafka, to ensure data integrity and consistency across the system.
+This detailed breakdown ensures that each component's role and interaction within the system is clear, demonstrating not only your technical prowess but also a deep understanding of practical and scalable system design. This setup will showcase your ability to implement a sophisticated microservices architecture using a variety of communication technologies.
+

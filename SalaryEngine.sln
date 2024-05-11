@@ -5,6 +5,8 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalaryEngine", "SalaryEngine\SalaryEngine.csproj", "{A204E85C-7215-4023-B878-3DCE52A74B4C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway", "ApiGateway\ApiGateway.csproj", "{126CB359-DEF6-4AF7-805E-555E7D8A49E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{A204E85C-7215-4023-B878-3DCE52A74B4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A204E85C-7215-4023-B878-3DCE52A74B4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A204E85C-7215-4023-B878-3DCE52A74B4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{126CB359-DEF6-4AF7-805E-555E7D8A49E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{126CB359-DEF6-4AF7-805E-555E7D8A49E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{126CB359-DEF6-4AF7-805E-555E7D8A49E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{126CB359-DEF6-4AF7-805E-555E7D8A49E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

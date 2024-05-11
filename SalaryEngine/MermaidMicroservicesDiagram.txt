@@ -1,0 +1,20 @@
+graph LR
+    F(Frontend Service: React) -->|HTTP| AG(API Gateway: .NET)
+    AG -->|HTTP/gRPC| AS(Authentication Service: .NET, MongoDB)
+    AG -->|RabbitMQ| SC(Salary Calculation Service: .NET, RabbitMQ, PostgreSQL)
+    AG -->|Kafka| PO(Payment Order Service: .NET, Kafka, PostgreSQL)
+    AG -->|gRPC| BC(Bank Communication Service: .NET, gRPC)
+    SC -->|RabbitMQ| PO
+    PO -->|Kafka| BC
+    AG -->|HTTP| LM(Logging & Monitoring Service: .NET, ELK Stack)
+    SC -->|HTTP| LM
+    PO -->|HTTP| LM
+    BC -->|HTTP| LM
+
+    classDef frontend fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef service fill:#ccf,stroke:#333,stroke-width:2px;
+    classDef database fill:#cfc,stroke:#333,stroke-width:2px;
+    classDef messaging fill:#fcf,stroke:#333,stroke-width:2px;
+
+    class F frontend;
+    class AG,AS,SC,PO,BC,LM service;

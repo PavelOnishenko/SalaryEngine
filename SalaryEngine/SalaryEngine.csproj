@@ -7,4 +7,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="ArchitectureDescription.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="ArchitectureDescription.txt" />
+  </ItemGroup>
+
 </Project>
