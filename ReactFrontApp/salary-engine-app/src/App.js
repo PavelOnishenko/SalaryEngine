@@ -1,22 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import axios from 'axios';
 
 function App() {
+  const handleClick = async () => {
+    try {
+      const response = await axios.get('https://localhost:32768/initiate');
+      console.log(response.data);
+    } catch (error) {
+      if(error.message !== 'Network Error') {
+        console.error('Error making GET request:', error);
+      }
+    }
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <button onClick={handleClick}>Initiate</button>
       </header>
     </div>
   );

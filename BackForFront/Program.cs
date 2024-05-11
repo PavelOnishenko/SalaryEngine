@@ -21,7 +21,7 @@ app.MapGet("/initiate", async (HttpContext context) =>
     var postResponseMessage = $"Response to Do Action: [{responseToPost}].";
     Console.WriteLine(getResponseMessage);
     Console.WriteLine(postResponseMessage);
-    return $"{getResponseMessage} {postResponseMessage}";
+    return Results.Json(new { message = $"{getResponseMessage} {postResponseMessage}" });
 });
 
 app.Run();
