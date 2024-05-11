@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalaryEngine", "SalaryEngin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway", "ApiGateway\ApiGateway.csproj", "{126CB359-DEF6-4AF7-805E-555E7D8A49E7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackForFront", "BackForFront\BackForFront.csproj", "{3FE2A5DE-0535-4110-8BC9-D9E04924A8BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{126CB359-DEF6-4AF7-805E-555E7D8A49E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{126CB359-DEF6-4AF7-805E-555E7D8A49E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{126CB359-DEF6-4AF7-805E-555E7D8A49E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FE2A5DE-0535-4110-8BC9-D9E04924A8BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FE2A5DE-0535-4110-8BC9-D9E04924A8BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FE2A5DE-0535-4110-8BC9-D9E04924A8BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FE2A5DE-0535-4110-8BC9-D9E04924A8BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

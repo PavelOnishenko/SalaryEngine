@@ -1,0 +1,6 @@
+@FrontApp.Server_HostAddress = http://localhost:5204
+
+GET {{FrontApp.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
