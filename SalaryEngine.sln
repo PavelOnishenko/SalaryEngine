@@ -9,6 +9,27 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway", "ApiGateway\Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackForFront", "BackForFront\BackForFront.csproj", "{3FE2A5DE-0535-4110-8BC9-D9E04924A8BF}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "salary-engine-app", "ReactFrontApp\salary-engine-app\", "{399D3E78-C002-44ED-8794-5149FD81B216}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_55434"
+		Debug.AspNetCompiler.PhysicalPath = "ReactFrontApp\salary-engine-app\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_55434\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_55434"
+		Release.AspNetCompiler.PhysicalPath = "ReactFrontApp\salary-engine-app\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_55434\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "55434"
+		SlnRelativePath = "ReactFrontApp\salary-engine-app\"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +48,10 @@ Global
 		{3FE2A5DE-0535-4110-8BC9-D9E04924A8BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FE2A5DE-0535-4110-8BC9-D9E04924A8BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FE2A5DE-0535-4110-8BC9-D9E04924A8BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{399D3E78-C002-44ED-8794-5149FD81B216}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{399D3E78-C002-44ED-8794-5149FD81B216}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{399D3E78-C002-44ED-8794-5149FD81B216}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{399D3E78-C002-44ED-8794-5149FD81B216}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
