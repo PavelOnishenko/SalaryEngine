@@ -4,7 +4,7 @@ import axios from 'axios';
 function App() {
   const handleClick = async () => {
     try {
-      const response = await axios.get('https://localhost:32768/initiate');
+      const response = await axios.get('https://127.0.0.1:32770/initiate');
       console.log(response.data);
     } catch (error) {
       if(error.message !== 'Network Error') {
