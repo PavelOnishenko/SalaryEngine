@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package salary;
+
+service SalaryService {
+  rpc DoAction(DoActionRequest) returns (DoActionResponse);
+
+  rpc GetInfo(GetInfoRequest) returns (GetInfoResponse);
+}
+
+message DoActionRequest {
+  string content = 1;
+}
+
+message DoActionResponse {
+  string content = 1;
+}
+
+message GetInfoRequest {
+  string content = 1;
+}
+
+message GetInfoResponse {
+ string content = 1;
+}
