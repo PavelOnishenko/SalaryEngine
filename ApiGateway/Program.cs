@@ -8,9 +8,13 @@ services.AddGrpcClient<Salary.SalaryService.SalaryServiceClient>(
     {
         return new HttpClientHandler
         {
-            // WARNING: Only use in development environments
             ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
         };
+    });
+services.AddHttpClient("AuthServiceClient", client => client.BaseAddress = new Uri("https://host.docker.internal:32774/"))
+    .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+    {
+        ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
     });
 
 var app = builder.Build();

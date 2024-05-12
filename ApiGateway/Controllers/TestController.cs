@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Web;
 
 namespace ApiGateway.Controllers;
 
 [Route("{controller}")]
-public class TestController(Salary.SalaryService.SalaryServiceClient salaryServiceGrpcClient) : ControllerBase
+public class TestController(
+    Salary.SalaryService.SalaryServiceClient salaryServiceGrpcClient, 
+    IHttpClientFactory httpClientFactory) : ControllerBase
 {
     [HttpGet]
     [Route("getInfo")]
@@ -30,6 +33,26 @@ public class TestController(Salary.SalaryService.SalaryServiceClient salaryServi
         var contentString = $"Controller type: [{nameof(TestController)}]. " +
                     $"Method: [{nameof(GetInfo)}]. Time:[{DateTime.Now}]. " +
                     $"Response from DoAction grpc call to Salary Service: [{doActionResponse}]. " +
+                    $"";
+        Console.WriteLine(contentString);
+        return Ok(contentString);
+    }
+
+    [HttpGet]
+    [Route("authTest")]
+    public async Task<IActionResult> AuthTest()
+    {
+        var client = httpClientFactory.CreateClient("AuthServiceClient");
+        var content = "Hello to the Auth Service!";
+        var encodedContent = HttpUtility.UrlEncode(content);
+        var baseUrl = "test/authTest";
+        var urlWithQuery = $"{baseUrl}?message={encodedContent}";
+        var response = await client.GetAsync(urlWithQuery);
+        var responseMessage = await response.Content.ReadAsStringAsync();
+        var authTestName = nameof(AuthTest);
+        var contentString = $"Controller type: [{nameof(TestController)}]. " +
+                    $"Method: [{authTestName}]. Time:[{DateTime.Now}]. " +
+                    $"Response from {authTestName} http call to Auth Service: [{responseMessage}]. " +
                     $"";
         Console.WriteLine(contentString);
         return Ok(contentString);

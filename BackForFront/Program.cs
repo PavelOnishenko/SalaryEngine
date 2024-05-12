@@ -15,13 +15,20 @@ app.MapGet("/initiate", async (HttpContext context) =>
     var client = factory.CreateClient("GatewayClient");
     var content = "Hello to the Gateway!";
     var stringContent = JsonContent.Create(content);
-    var responseToPost = await client.PostAsync("test/doAction", stringContent);
-    var responseToGet = await client.GetAsync("test/getInfo");
-    var getResponseMessage = $"Response to GetInfo: [{responseToGet}].";
-    var postResponseMessage = $"Response to Do Action: [{responseToPost}].";
-    Console.WriteLine(getResponseMessage);
-    Console.WriteLine(postResponseMessage);
-    return Results.Json(new { message = $"{getResponseMessage} {postResponseMessage}" });
+
+    var responseToDoAction = await client.PostAsync("test/doAction", stringContent);
+    var doActionResponseMessage = $"Response to Do Action: [{responseToDoAction}].";
+    Console.WriteLine(doActionResponseMessage);
+
+    var responseToGetInfo = await client.GetAsync("test/getInfo");
+    var getInfoResponseMessage = $"Response to GetInfo: [{responseToGetInfo}].";
+    Console.WriteLine(getInfoResponseMessage);
+
+    var responseToAuthTest = await client.GetAsync("test/authTest");
+    var authTestResponseMessage = $"Response to AuthTest: [{responseToAuthTest}].";
+    Console.WriteLine(authTestResponseMessage);
+
+    return Results.Json(new { message = $"{getInfoResponseMessage} {doActionResponseMessage} {authTestResponseMessage}" });
 });
 
 app.Run();
