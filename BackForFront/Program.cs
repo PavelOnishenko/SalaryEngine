@@ -1,6 +1,6 @@
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
-services.AddHttpClient("GatewayClient", client => client.BaseAddress = new Uri("https://host.docker.internal:32772/"))
+services.AddHttpClient("GatewayClient", client => client.BaseAddress = new Uri("https://host.docker.internal:32768/"))
     .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
     {
         ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
