@@ -1,6 +1,6 @@
 ﻿namespace LedgerMicroservice.Models
 {
-    public class TransactionInm
+    public class TransactionDbm
     {
         public int Id { get; set; }
 

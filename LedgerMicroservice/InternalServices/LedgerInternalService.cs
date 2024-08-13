@@ -2,18 +2,15 @@
 
 namespace LedgerMicroservice.InternalServices
 {
-    public class LedgerInternalService
+    public class LedgerInternalService(IDb db)
     {
+        private readonly IDb db = db;
+
         public TransactionInm[] GetTransactions()
         {
-            return
-            [
-                new TransactionInm
-                {
-                    AccountName = "4202", BalanceChange = 813.5f, Id = 859, 
-                    Time = new DateTime(2024, 08, 13, 09, 01, 42)
-                }
-            ];
+            var dbms = db.GetTransactions();
+            var result = dbms.Select(x => x.ToInm()).ToArray();
+            return result;
         }
     }
 }
