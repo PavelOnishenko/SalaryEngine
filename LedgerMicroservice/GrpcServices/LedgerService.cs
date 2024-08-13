@@ -1,9 +1,9 @@
 ﻿using Grpc.Core;
-using Salary;
+using Ledger;
 
-namespace SalaryMicroservice.GrpcServices;
+namespace LedgerMicroservice.GrpcServices;
 
-public class SalaryService : Salary.SalaryService.SalaryServiceBase
+public class LedgerService : Ledger.LedgerService.LedgerServiceBase
 {
     public override Task<DoActionResponse> DoAction(DoActionRequest request, ServerCallContext context)
     {

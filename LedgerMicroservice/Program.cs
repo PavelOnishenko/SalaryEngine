@@ -1,4 +1,4 @@
-using SalaryMicroservice.GrpcServices;
+using LedgerMicroservice.GrpcServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +18,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapGrpcService<SalaryService>();
+app.MapGrpcService<LedgerService>();
 
 app.Run();

@@ -4,8 +4,8 @@ Console.WriteLine("ApiGateway started.");
 
 var services = builder.Services;
 services.AddControllers();
-services.AddGrpcClient<Salary.SalaryService.SalaryServiceClient>(
-    o => { o.Address = new Uri("https://host.docker.internal:32772"); })
+services.AddGrpcClient<Ledger.LedgerService.LedgerServiceClient>(
+    o => { o.Address = new Uri("https://host.docker.internal:32798"); })
     .ConfigurePrimaryHttpMessageHandler(() =>
     {
         return new HttpClientHandler
@@ -13,7 +13,7 @@ services.AddGrpcClient<Salary.SalaryService.SalaryServiceClient>(
             ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
         };
     });
-services.AddHttpClient("AuthServiceClient", client => client.BaseAddress = new Uri("https://host.docker.internal:32770/"))
+services.AddHttpClient("AuthServiceClient", client => client.BaseAddress = new Uri("https://host.docker.internal:32790/"))
     .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
     {
         ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator

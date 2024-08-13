@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace SalaryMicroservice.Controllers;
+namespace LedgerMicroservice.Controllers;
 
 [Route("{controller}")]
 public class TestController : ControllerBase

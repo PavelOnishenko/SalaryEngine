@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGateway", "ApiGateway\Ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackForFront", "BackForFront\BackForFront.csproj", "{3FE2A5DE-0535-4110-8BC9-D9E04924A8BF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SalaryMicroservice", "SalaryMicroservice\SalaryMicroservice.csproj", "{D0440454-6B6F-4F15-9A35-CE8AB855CF72}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LedgerMicroservice", "LedgerMicroservice\LedgerMicroservice.csproj", "{D0440454-6B6F-4F15-9A35-CE8AB855CF72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthMicroservice", "AuthMicroservice\AuthMicroservice.csproj", "{C1F51F94-660D-4AC6-9FA7-F442E0F61E63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthMicroservice", "AuthMicroservice\AuthMicroservice.csproj", "{C1F51F94-660D-4AC6-9FA7-F442E0F61E63}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests_LedgerMicroservice", "UnitTests_LedgerMicroservice\UnitTests_LedgerMicroservice.csproj", "{3B1A93E2-7DFC-42E4-AFC8-4DDC3C6F4090}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{C1F51F94-660D-4AC6-9FA7-F442E0F61E63}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1F51F94-660D-4AC6-9FA7-F442E0F61E63}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1F51F94-660D-4AC6-9FA7-F442E0F61E63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B1A93E2-7DFC-42E4-AFC8-4DDC3C6F4090}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B1A93E2-7DFC-42E4-AFC8-4DDC3C6F4090}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B1A93E2-7DFC-42E4-AFC8-4DDC3C6F4090}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B1A93E2-7DFC-42E4-AFC8-4DDC3C6F4090}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

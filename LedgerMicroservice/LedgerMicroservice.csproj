@@ -9,16 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ProtoFiles\LedgerMicroserviceGrpcService.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Grpc.AspNetCore" Version="2.62.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ProtoFiles\" />
-  </ItemGroup>
-
 	<ItemGroup>
-		<Protobuf Include="ProtoFiles/SalaryMicroserviceGrpcService.proto" GrpcServices="Server" />
+		<Protobuf Include="ProtoFiles\LedgerMicroserviceGrpcService.proto" GrpcServices="Server" />
 	</ItemGroup>
 
 </Project>
