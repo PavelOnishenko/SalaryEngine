@@ -6,9 +6,9 @@ namespace LedgerMicroservice.InternalServices
     {
         private readonly IDb db = db;
 
-        public TransactionInm[] GetTransactions()
+        public async Task<TransactionInm[]> GetTransactionsAsync()
         {
-            var dbms = db.GetTransactions();
+            var dbms = await db.GetTransactionsAsync();
             var result = dbms.Select(x => x.ToInm()).ToArray();
             return result;
         }

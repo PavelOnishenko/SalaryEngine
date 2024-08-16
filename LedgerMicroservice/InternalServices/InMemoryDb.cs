@@ -2,19 +2,20 @@
 
 namespace LedgerMicroservice.InternalServices
 {
-    public class InMemoryDb : IDb
+    public class InMemoryDb : ILowLevelDb
     {
         readonly List<TransactionDbm> transactions = [];
 
-        public TransactionDbm[] GetTransactions() => [.. transactions];
+        public async Task<TransactionDbm[]> GetTransactionsAsync() => [.. transactions];
 
-        public void SaveTransaction(TransactionSaveDbm transaction)
+        public async Task SaveTransactionAsync(TransactionSaveDbm transaction)
         {
             var dbm = transaction.ToDbm();
             dbm.Id = transactions.Max(x => x.Id) + 1;
-            AddTransaction(dbm);
+            await AddTransactionAsync(dbm);
         }
+        public async Task AddTransactionAsync(TransactionDbm transaction) => transactions.Add(transaction);
 
-        public void AddTransaction(TransactionDbm transaction) => transactions.Add(transaction);
+        public async Task DropEverythingAsync() => transactions.Clear();
     }
 }

@@ -4,8 +4,8 @@ namespace LedgerMicroservice.InternalServices
 {
     public interface IDb
     {
-        TransactionDbm[] GetTransactions();
+        Task<TransactionDbm[]> GetTransactionsAsync();
 
-        void SaveTransaction(TransactionSaveDbm transaction);
+        Task SaveTransactionAsync(TransactionSaveDbm transaction);
     }
 }
