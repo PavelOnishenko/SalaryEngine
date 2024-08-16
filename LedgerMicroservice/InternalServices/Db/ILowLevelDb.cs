@@ -1,6 +1,6 @@
 ﻿using LedgerMicroservice.Models;
 
-namespace LedgerMicroservice.InternalServices
+namespace LedgerMicroservice.InternalServices.Db
 {
     public interface ILowLevelDb : IDb
     {

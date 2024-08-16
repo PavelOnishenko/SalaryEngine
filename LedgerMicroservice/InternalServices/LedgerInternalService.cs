@@ -1,4 +1,5 @@
-﻿using LedgerMicroservice.Models;
+﻿using LedgerMicroservice.InternalServices.Db;
+using LedgerMicroservice.Models;
 
 namespace LedgerMicroservice.InternalServices
 {

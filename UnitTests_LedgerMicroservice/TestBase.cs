@@ -1,4 +1,5 @@
 ﻿using LedgerMicroservice.InternalServices;
+using LedgerMicroservice.InternalServices.Db;
 using LedgerMicroservice.Models;
 using Microsoft.Extensions.DependencyInjection;
 

@@ -1,4 +1,5 @@
 using LedgerMicroservice.InternalServices;
+using LedgerMicroservice.InternalServices.Db;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace UnitTests_LedgerMicroservice

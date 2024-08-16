@@ -1,7 +1,7 @@
 ﻿using LedgerMicroservice.Models;
 using Npgsql;
 
-namespace LedgerMicroservice.InternalServices
+namespace LedgerMicroservice.InternalServices.Db
 {
     public class TestPostgresDb : ILowLevelDb
     {
@@ -41,7 +41,9 @@ namespace LedgerMicroservice.InternalServices
                 {
                     var transaction = new TransactionDbm
                     {
-                        Id = reader.GetInt32(0), Time = reader.GetDateTime(1), BalanceChange = reader.GetFloat(2), 
+                        Id = reader.GetInt32(0),
+                        Time = reader.GetDateTime(1),
+                        BalanceChange = reader.GetFloat(2),
                         AccountName = reader.IsDBNull(3) ? null : reader.GetString(3)
                     };
                     transactions.Add(transaction);
