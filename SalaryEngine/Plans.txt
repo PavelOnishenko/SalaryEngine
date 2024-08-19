@@ -1,3 +1,15 @@
+Objectives:
+
+1. Write ledger microservice logic with TDD. Simple use cases - CRUD but about ledger.
+2. Expand the covered scenarios to the whole system, adding to each microservice using TDD. Including GUI.
+
+
+
+
+
+
+Objectives before 8/19/2024 (they might be implemented later):
+
 1. Add all projects (microservices) creating and configuring all connections after adding each one. 
 List of the microservices is in Architecture description.
 Test each connection after adding. Content of connections doesn't matter on this stage, let it be "test".

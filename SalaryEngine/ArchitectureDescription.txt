@@ -1,4 +1,6 @@
-﻿Microservices Overview
+﻿May be obsolete!
+
+Microservices Overview
 1.	API Gateway
 •	Type of Project: ASP.NET Core Web API
 •	Techs: .NET Core, HTTP/gRPC
@@ -29,6 +31,12 @@
 •	API Gateway(HTTP / gRPC)
 •	Payment Order Service(RabbitMQ)
 •	Purpose: Calculate employee salaries and manage related data.
+
+
+For later:
+
+
+
 5.Payment Order Service
 •	Type of Project: ASP.NET Core Web API
 •	Techs: .NET Core, PostgreSQL, Kafka

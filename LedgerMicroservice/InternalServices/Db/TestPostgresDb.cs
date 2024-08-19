@@ -3,54 +3,65 @@ using Npgsql;
 
 namespace LedgerMicroservice.InternalServices.Db
 {
-    public class TestPostgresDb : ILowLevelDb
+    public class TestPostgresDb(NpgsqlConnection connection) : ILowLevelDb
     {
-        private readonly NpgsqlConnection connection;
+        private readonly NpgsqlConnection connection = connection;
 
-        public TestPostgresDb(NpgsqlConnection connection)
+        public async Task AddAsync<T>(T entity)
         {
-            this.connection = connection;
-        }
+            if(entity is null) throw new ArgumentNullException(nameof(entity));
 
-        public async Task AddTransactionAsync(TransactionDbm model)
-        {
-            var sql = "INSERT INTO transactions (time, balance_change, account_name) VALUES (@time, @balance_change, @account_name)";
-            using (var command = new NpgsqlCommand(sql, connection))
-            {
-                command.Parameters.AddWithValue("@time", model.Time);
-                command.Parameters.AddWithValue("@balance_change", model.BalanceChange);
-                command.Parameters.AddWithValue("@account_name", model.AccountName ?? (object)DBNull.Value);
-
-                await command.ExecuteNonQueryAsync();
-            }
+            if (entity is TransactionDbm transaction)
+                await AddTransaction(transaction);
+            else 
+                throw new ArgumentException($"Entity [{entity}] has unexpected type [{entity.GetType()}].");
         }
 
         public async Task DropEverythingAsync()
         {
-            var sql = "delete from transactions;";
-            using var command = new NpgsqlCommand(sql, connection);
+            using var command = new NpgsqlCommand("delete from transactions;", connection);
             await command.ExecuteNonQueryAsync();
         }
 
-        public async Task<TransactionDbm[]> GetTransactionsAsync()
+        public async Task<TransactionDbm[]> GetTransactionsAsync() => await GetTransactionsInternalAsync();
+
+        public async Task SaveTransactionAsync(TransactionSaveDbm transaction) => await AddAsync(transaction.ToDbm());
+
+        public async Task<T[]> GetAllAsync<T>()
         {
-            var transactions = new List<TransactionDbm>();
-            using (var command = new NpgsqlCommand("SELECT id, time, balance_change, account_name FROM transactions", connection))
-            using (var reader = await command.ExecuteReaderAsync())
-                while (reader.Read())
-                {
-                    var transaction = new TransactionDbm
-                    {
-                        Id = reader.GetInt32(0),
-                        Time = reader.GetDateTime(1),
-                        BalanceChange = reader.GetFloat(2),
-                        AccountName = reader.IsDBNull(3) ? null : reader.GetString(3)
-                    };
-                    transactions.Add(transaction);
-                }
-            return [.. transactions];
+            if (typeof(T) == typeof(TransactionDbm))
+                return (await GetTransactionsInternalAsync()).Cast<T>().ToArray();
+            else
+                throw new InvalidOperationException($"The type [{typeof(T)}] is unexpected.");
         }
 
-        public async Task SaveTransactionAsync(TransactionSaveDbm transaction) => await AddTransactionAsync(transaction.ToDbm());
+        private async Task AddTransaction(TransactionDbm model)
+        {
+            var sql = "INSERT INTO transactions (time, balance_change, account_name) VALUES (@time, @balance_change, @account_name)";
+            using var command = new NpgsqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@time", model.Time);
+            command.Parameters.AddWithValue("@balance_change", model.BalanceChange);
+            command.Parameters.AddWithValue("@account_name", model.AccountName ?? (object)DBNull.Value);
+            await command.ExecuteNonQueryAsync();
+        }
+
+        private async Task<TransactionDbm[]> GetTransactionsInternalAsync()
+        {
+            var transactions = new List<TransactionDbm>();
+            using var command = new NpgsqlCommand("SELECT id, time, balance_change, account_name FROM transactions", connection);
+            using var reader = await command.ExecuteReaderAsync();
+            while (reader.Read())
+            {
+                var transaction = new TransactionDbm
+                {
+                    Id = reader.GetInt32(0),
+                    Time = reader.GetDateTime(1),
+                    BalanceChange = reader.GetFloat(2),
+                    AccountName = reader.IsDBNull(3) ? null : reader.GetString(3)
+                };
+                transactions.Add(transaction);
+            }
+            return [.. transactions];
+        }
     }
 }

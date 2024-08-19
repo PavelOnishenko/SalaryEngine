@@ -10,5 +10,10 @@ namespace LedgerMicroservice
         public static TransactionInm ToInm(this TransactionDbm source) => 
             new()
                 { AccountName = source.AccountName, BalanceChange = source.BalanceChange, Time = source.Time, Id = source.Id };
+
+        public static TransactionSaveDbm ToDbm(this TransactionSaveInm source) =>
+            new()
+            { AccountName = source.AccountName, BalanceChange = source.BalanceChange, Time = source.Time };
+
     }
 }

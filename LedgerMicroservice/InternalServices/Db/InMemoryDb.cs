@@ -4,18 +4,41 @@ namespace LedgerMicroservice.InternalServices.Db
 {
     public class InMemoryDb : ILowLevelDb
     {
-        readonly List<TransactionDbm> transactions = [];
+        private readonly List<TransactionDbm> transactions = [];
 
-        public async Task<TransactionDbm[]> GetTransactionsAsync() => [.. transactions];
+        public Task<TransactionDbm[]> GetTransactionsAsync() => Task.FromResult<TransactionDbm[]>([.. transactions]);
 
-        public async Task SaveTransactionAsync(TransactionSaveDbm transaction)
+        public async Task SaveTransactionAsync(TransactionSaveDbm transaction) => await AddAsync((TransactionDbm?)transaction.ToDbm());
+
+        public Task AddAsync<T>(T entity)
         {
-            var dbm = transaction.ToDbm();
-            dbm.Id = transactions.Max(x => x.Id) + 1;
-            await AddTransactionAsync(dbm);
-        }
-        public async Task AddTransactionAsync(TransactionDbm transaction) => transactions.Add(transaction);
+            if(entity is null) 
+                throw new ArgumentNullException(nameof(entity));
 
-        public async Task DropEverythingAsync() => transactions.Clear();
+            if (entity is TransactionDbm entityDbm)
+            {
+                entityDbm.Id = transactions.Count == 0 ? 1 : transactions.Max(x => x.Id) + 1;
+                transactions.Add(entityDbm);
+            }
+            else
+            {
+                throw new ArgumentException($"Entity [{entity}] has unexpected type [{entity.GetType()}].");
+            }
+            return Task.CompletedTask;
+        }
+
+        public Task DropEverythingAsync()
+        {
+            transactions.Clear();
+            return Task.CompletedTask;
+        }
+
+        public Task<T[]> GetAllAsync<T>()
+        {
+            if(typeof(T) == typeof(TransactionDbm)) 
+                return Task.FromResult(transactions.ToArray().Cast<T>().ToArray());
+            else
+                throw new InvalidOperationException($"The type [{typeof(T)}] is unexpected.");
+        }
     }
 }

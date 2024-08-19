@@ -10,8 +10,9 @@ namespace LedgerMicroservice.InternalServices
         public async Task<TransactionInm[]> GetTransactionsAsync()
         {
             var dbms = await db.GetTransactionsAsync();
-            var result = dbms.Select(x => x.ToInm()).ToArray();
-            return result;
+            return dbms.Select(x => x.ToInm()).ToArray();
         }
+
+        public async Task SaveTransactionAsync(TransactionSaveInm model) => await db.SaveTransactionAsync(model.ToDbm());
     }
 }

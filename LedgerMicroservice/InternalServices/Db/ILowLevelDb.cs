@@ -1,10 +1,11 @@
-﻿using LedgerMicroservice.Models;
-
-namespace LedgerMicroservice.InternalServices.Db
+﻿namespace LedgerMicroservice.InternalServices.Db
 {
+    // todo do we need to inherit from DB? Maybe make it separate just for test purposes?
     public interface ILowLevelDb : IDb
     {
-        Task AddTransactionAsync(TransactionDbm model);
+        Task<T[]> GetAllAsync<T>();
+
+        Task AddAsync<T>(T entity);
 
         Task DropEverythingAsync();
     }
